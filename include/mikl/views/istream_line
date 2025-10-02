@@ -1,0 +1,53 @@
+#ifndef MIKO_MAS_LIBRARY_VIEWS_ISTREAM_LINE_GUARD
+#define MIKO_MAS_LIBRARY_VIEWS_ISTREAM_LINE_GUARD
+#include <istream>
+
+namespace mikl::views
+{
+    template <typename CharT = char, typename Traits = std::char_traits<CharT>>
+        struct istream_line : public std::ranges::view_interface<istream_line<CharT, Traits>>
+    {
+        public:
+            constexpr explicit istream_line(std::basic_istream<CharT, Traits>& stream) : stream_{std::addressof(stream)}{}
+            constexpr auto begin()                                 {std::getline(*stream_, value_); return iterator{*this};};
+            constexpr auto end() const -> std::default_sentinel_t  {return std::default_sentinel_t();}
+
+
+        private:
+            std::basic_istream<CharT, Traits>* stream_;
+            std::basic_string<CharT, Traits>   value_;
+
+            struct iterator
+            {
+                using iterator_concept = std::input_iterator_tag;
+                using difference_type  = std::ptrdiff_t;
+                using value_type       = decltype(value_);
+
+                using parrent_type     = istream_line<CharT, Traits>;
+
+                constexpr iterator(const iterator&) = delete;
+                constexpr iterator(iterator&&)      = default;
+                constexpr explicit iterator(parrent_type& parent) { parrent = std::addressof(parent); }
+
+                constexpr iterator& operator=(const iterator&) = delete;
+                constexpr iterator& operator=(iterator&&)      = default;
+
+                iterator& operator++()
+                {
+                    std::getline(*parrent -> stream_, parrent -> value_);
+                    return *this;
+                }
+
+                void operator++(int) { return ++*this; }
+
+                value_type& operator*() const { return parrent -> value_; }
+
+                friend bool operator==(const istream_line::iterator& x, std::default_sentinel_t) { return !(*((x.parrent) -> stream_)); }
+
+                private:
+                parrent_type* parrent;
+
+            };
+    };
+}
+#endif

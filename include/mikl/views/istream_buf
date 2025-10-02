@@ -1,0 +1,19 @@
+#ifndef MIKO_MAS_LIBRARY_VIEWS_ISTREAM_BUF_GUARD
+#define MIKO_MAS_LIBRARY_VIEWS_ISTREAM_BUF_GUARD
+#include <istream>
+
+namespace mikl::views
+{
+    template <typename CharT, typename Traits = std::char_traits<CharT>>
+    struct istream_buf : public std::ranges::view_interface<istream_buf<CharT, Traits>>
+    {
+        public:
+        constexpr explicit istream_buf(std::basic_istream<CharT, Traits>& stream) : val_{std::addressof(stream)} {}
+        constexpr auto begin()      {return std::istreambuf_iterator<CharT, Traits>(*val_);};
+        constexpr auto end() const  {return std::istreambuf_iterator<CharT, Traits>();}
+
+        private:
+        std::basic_istream<CharT, Traits>* val_;
+    };
+}
+#endif

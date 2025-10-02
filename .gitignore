@@ -1,0 +1,7 @@
+build/
+.clangd
+CMakeCache.txt
+build.sh
+main.cpp
+.cache/
+CMakeFiles/
