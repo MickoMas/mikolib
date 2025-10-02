@@ -1,0 +1,5 @@
+#ifndef MIKO_MAS_LIBRARY_VIEWS_ALL_GUARD
+#define MIKO_MAS_LIBRARY_VIEWS_ALL_GUARD
+#include <mikl/views/istream_buf>
+#include <mikl/views/istream_line>
+#endif

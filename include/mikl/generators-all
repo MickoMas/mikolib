@@ -1,0 +1,5 @@
+#ifndef MIKO_MAS_LIBRARY_GENERATORS_ALL_GUARD
+#define MIKO_MAS_LIBRARY_GENERATORS_ALL_GUARD
+#include <mikl/generators/istream_buf>
+#include <mikl/generators/istream_line>
+#endif

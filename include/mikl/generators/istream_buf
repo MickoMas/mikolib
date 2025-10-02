@@ -1,0 +1,14 @@
+#ifndef MIKO_MAS_LIBRARY_GENERATORS_ISTREAM_BUF_GUARD
+#define MIKO_MAS_LIBRARY_GENERATORS_ISTREAM_BUF_GUARD
+#include <istream>
+#include <generator>
+
+namespace mikl::generators
+{
+    template <typename CharT, typename Traits>
+    auto istream_buf(std::basic_istream<CharT, Traits>& istream) -> std::generator<CharT>
+    {
+        for(CharT letter; (letter = istream.get(), istream);) co_yield letter;
+    }
+}
+#endif

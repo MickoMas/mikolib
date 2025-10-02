@@ -1,0 +1,16 @@
+#ifndef MIKO_MAS_LIBRARY_VIEWS_ISTREAM_LINE_GUARD
+#define MIKO_MAS_LIBRARY_VIEWS_ISTREAM_LINE_GUARD
+
+#include <generator>
+#include <string>
+#include <istream>
+
+namespace mikl::generators
+{
+    template <typename CharT, typename Traits>
+    auto istream_line(std::basic_istream<CharT, Traits>& istream) -> std::generator<std::basic_string<CharT, Traits>&&>
+    {
+        for(std::basic_string<CharT, Traits> line; std::getline(istream, line); ) co_yield std::move(line);
+    }
+}
+#endif

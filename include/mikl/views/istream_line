@@ -1,5 +1,6 @@
 #ifndef MIKO_MAS_LIBRARY_VIEWS_ISTREAM_LINE_GUARD
 #define MIKO_MAS_LIBRARY_VIEWS_ISTREAM_LINE_GUARD
+
 #include <istream>
 
 namespace mikl::views
